@@ -2,18 +2,30 @@
 import pygame
 import os
 
-
 pygame.init()
 
-pygame.display.set_mode()
-surface = pygame.image.load(os.path.join(os.getcwd(), "img\siep.jpg")).convert()
-pygame.Surface.convert(surface)
+screen = pygame.display.set_mode((1280, 720))
 
-sample_surface = pygame.display.set_mode((400, 300))
-# Choosing red color for the rectangle
-color = (255, 255, 0)
+clock = pygame.time.Clock()
 
-# Drawing Rectangle
-pygame.draw.rect(sample_surface, color, pygame.Rect(30, 30, 60, 60))
+pygame.mouse.set_visible(0)
 
-pygame.display.flip()
+while True:
+    # Process player inputs.
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            raise SystemExit
+
+    # Do logical updates here.
+    # ...
+    surface = pygame.image.load(os.path.join(os.getcwd(), "img\siep.jpg")).convert()
+    screen.fill(
+        "purple", screen.blit(surface, (10, 10))
+    )  # Fill the display with a solid color
+
+    # Render the graphics here.
+    # ...
+
+    pygame.display.flip()  # Refresh on-screen display
+    clock.tick(60)  # wait until next frame (at 60 FPS)
