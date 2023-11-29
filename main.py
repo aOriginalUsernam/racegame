@@ -1,6 +1,7 @@
 import pygame
 import pyautogui
 import os
+from models.Player import Player
 
 
 def __main__() -> None:
@@ -13,13 +14,21 @@ def __main__() -> None:
     # make header
     pygame.display.set_caption("ned for spied")
     icon: pygame.Surface = pygame.image.load(
-        os.path.join(os.getcwd(), "img\siep.jpg")
+        os.path.join(os.getcwd(), "image\siep.jpg")
     ).convert()
     pygame.display.set_icon(icon)
 
     clock = pygame.time.Clock()
 
+    # player settings
     pygame.mouse.set_visible(0)
+    player_x = 250
+    player_y = 400
+
+    # create player
+    players = pygame.sprite.Group()
+    player = Player(player_x, player_y)
+    players.add(player)
 
     # player = pygame.Rect()
 
@@ -56,7 +65,9 @@ def __main__() -> None:
         screen.fill("purple")  # Fill the display with a solid color
 
         # Render the graphics here.
-        # ...
+
+        # draw the player(s)
+        players.draw(screen)
 
         pygame.display.flip()  # Refresh on-screen display
         clock.tick(60)  # wait until next frame (at 60 FPS)

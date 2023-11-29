@@ -1,9 +1,10 @@
-import entity
+from models.Entity import Entity
+import pygame
+import os
 
 
-class player(entity):
+class Player(Entity):
     def __init__(self, x: int, y: int) -> None:
-        super.__init__(
-            x,
-            y,
-        )
+        image = pygame.image.load(os.path.join(os.getcwd(), "image\player.png"))
+
+        super().__init__(x, y, image)
