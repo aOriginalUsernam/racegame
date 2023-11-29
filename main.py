@@ -3,6 +3,7 @@ import pyautogui
 import os
 from models.player import Player
 
+
 def __main__() -> None:
     pygame.init()
 
@@ -37,30 +38,33 @@ def __main__() -> None:
         try:
             # Process player inputs.
             for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    raise SystemExit
-                elif event.type == pygame.KEYDOWN:
-                    # check which key was pressed
-                    if event.key == pygame.K_ESCAPE:
+                match event.type:
+                    case pygame.QUIT:
                         raise SystemExit
-                    elif event.key in (pygame.K_w, pygame.K_UP):
-                        # go up
-                        player_dy = -player_speed
-                    elif event.key in (pygame.K_a, pygame.K_LEFT):
-                        # go left
-                        player_dx = -player_speed
-                    elif event.key in (pygame.K_s, pygame.K_DOWN):
-                        # go down
-                        player_dy = player_speed
-                    elif event.key in (pygame.K_d, pygame.K_RIGHT):
-                        # go right
-                        player_dx = player_speed
-                elif event.type == pygame.KEYUP:
-                    # stop moving when key is released
-                    if event.key in (pygame.K_w, pygame.K_s, pygame.K_UP, pygame.K_DOWN):
-                        player_dy = 0
-                    elif event.key in (pygame.K_a, pygame.K_d, pygame.K_LEFT, pygame.K_RIGHT):
-                        player_dx = 0
+                    case pygame.KEYDOWN:
+                        # check which key was pressed
+                        match event.key:
+                            case pygame.K_ESCAPE:  # esc closes screen
+                                raise SystemExit
+                            case pygame.K_w | pygame.K_UP:
+                                # go up
+                                player_dy = -player_speed
+                            case pygame.K_a | pygame.K_LEFT:
+                                # go left
+                                player_dx = -player_speed
+                            case pygame.K_s | pygame.K_DOWN:
+                                # go down
+                                player_dy = player_speed
+                            case pygame.K_d | pygame.K_RIGHT:
+                                # go right
+                                player_dx = player_speed
+                    case pygame.KEYUP:
+                        # stop moving when key is released
+                        match event.key:
+                            case pygame.K_w | pygame.K_s | pygame.K_UP | pygame.K_DOWN:
+                                player_dy = 0
+                            case pygame.K_a | pygame.K_d | pygame.K_LEFT | pygame.K_RIGHT:
+                                player_dx = 0
         except SystemExit:
             pygame.quit()
             break
@@ -80,6 +84,7 @@ def __main__() -> None:
 
         pygame.display.flip()  # Refresh on-screen display
         clock.tick(60)  # wait until the next frame (at 60 FPS)
+
 
 if __name__ == "__main__":
     __main__()
