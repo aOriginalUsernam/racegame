@@ -1,7 +1,7 @@
 import pygame
 import pyautogui
 import os
-from models.Player import Player
+from models.player import Player
 
 
 def __main__() -> None:
@@ -101,6 +101,9 @@ def __main__() -> None:
         player.rect.y += player_dy
 
         # Do logical updates here.
+        player.rect.x = max(740, min(player.rect.x, 1137))
+        player.rect.y = max(10, min(player.rect.y, 1700))
+        player.rect.y = min(1025, max(player.rect.y, 10))
         # ...
         screen.fill("purple")  # Fill the display with a solid color
 
