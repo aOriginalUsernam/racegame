@@ -9,6 +9,7 @@ class Player(Entity):
         self.default_image: pygame.Surface = image.copy()
         self.degree: int = 0
         super().__init__(x, y, image)
+        self.default_image: pygame.Surface = self.image.copy()
 
     def turn(self, degree: int) -> None:
         if degree % 360 == 0 or degree == 0:
