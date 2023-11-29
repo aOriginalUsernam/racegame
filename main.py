@@ -37,6 +37,7 @@ def __main__() -> None:
     while True:
         try:
             # Process player inputs.
+            player_has_rotated = False
             for event in pygame.event.get():
                 match event.type:
                     case pygame.QUIT:
@@ -52,12 +53,18 @@ def __main__() -> None:
                             case pygame.K_a | pygame.K_LEFT:
                                 # go left
                                 player_dx = -player_speed
+                                if player.degree >= -30:
+                                    player.turn(-10)
+                                    player_has_rotated = True
                             case pygame.K_s | pygame.K_DOWN:
                                 # go down
                                 player_dy = player_speed
                             case pygame.K_d | pygame.K_RIGHT:
                                 # go right
                                 player_dx = player_speed
+                                if player.degree <= 30:
+                                    player.turn(10)
+                                    player_has_rotated = True
                     case pygame.KEYUP:
                         # stop moving when key is released
                         match event.key:
@@ -65,6 +72,7 @@ def __main__() -> None:
                                 player_dy = 0
                             case pygame.K_a | pygame.K_d | pygame.K_LEFT | pygame.K_RIGHT:
                                 player_dx = 0
+                                player.turn(player.degree * -1)
         except SystemExit:
             pygame.quit()
             break
