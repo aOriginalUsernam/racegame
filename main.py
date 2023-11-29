@@ -1,7 +1,8 @@
 import pygame
 import pyautogui
 import os
-from models.player import Player
+from models.Player import Player
+
 
 def __main__() -> None:
     pygame.init()
@@ -11,20 +12,29 @@ def __main__() -> None:
     screen: pygame.Surface = pygame.display.set_mode(full_screen_size)
 
     # Load background image
-    fullscreen_background = pygame.image.load(os.path.join(os.getcwd(), "image/grass.png")).convert()
-    fullscreen_background = pygame.transform.smoothscale(fullscreen_background, full_screen_size)
-    
-    original_background = pygame.image.load(os.path.join(os.getcwd(), "image/road_0.png"))
+    fullscreen_background = pygame.image.load(
+        os.path.join(os.getcwd(), "image/grass.png")
+    ).convert()
+    fullscreen_background = pygame.transform.smoothscale(
+        fullscreen_background, full_screen_size
+    )
+
+    original_background = pygame.image.load(
+        os.path.join(os.getcwd(), "image/road_0.png")
+    )
     background_width, background_height = original_background.get_size()
 
     # Calculate the position to center the background image
     background_x = (full_screen_size[0] - background_width) // 2
     background_y = (full_screen_size[1] - background_height) // 2
-    background_image = pygame.transform.smoothscale(original_background, (background_width, background_height))
+    background_image = pygame.transform.smoothscale(
+        original_background, (background_width, background_height)
+    )
     # make header
     pygame.display.set_caption("ned for spied")
     icon: pygame.Surface = pygame.image.load(
-        os.path.join(os.getcwd(), "image\siep.jpg")).convert()
+        os.path.join(os.getcwd(), "image\siep.jpg")
+    ).convert()
     pygame.display.set_icon(icon)
 
     clock = pygame.time.Clock()
@@ -106,6 +116,7 @@ def __main__() -> None:
 
         pygame.display.flip()  # Refresh on-screen display
         clock.tick(60)  # wait until the next frame (at 60 FPS)
+
 
 if __name__ == "__main__":
     __main__()
