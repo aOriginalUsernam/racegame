@@ -1,8 +1,7 @@
 import pygame
 import pyautogui
 import os
-from models.Player import Player
-
+from models.player import Player
 
 def __main__() -> None:
     pygame.init()
@@ -30,35 +29,45 @@ def __main__() -> None:
     player = Player(player_x, player_y)
     players.add(player)
 
-    # player = pygame.Rect()
+    # player velocity
+    player_speed = 5
+    player_dx, player_dy = 0, 0
 
     while True:
         try:
             # Process player inputs.
             for event in pygame.event.get():
-                match event.type:
-                    case pygame.QUIT:
+                if event.type == pygame.QUIT:
+                    raise SystemExit
+                elif event.type == pygame.KEYDOWN:
+                    # check which key was pressed
+                    if event.key == pygame.K_ESCAPE:
                         raise SystemExit
-                    case pygame.KEYDOWN:
-                        # check which key was pressed
-                        match event.key:
-                            case pygame.K_ESCAPE:  # esc closes screen
-                                raise SystemExit
-                            case pygame.K_w | pygame.K_UP:
-                                # go up
-                                pass
-                            case pygame.K_a | pygame.K_LEFT:
-                                # go left
-                                pass
-                            case pygame.K_s | pygame.K_DOWN:
-                                # go down
-                                pass
-                            case pygame.K_d | pygame.K_RIGHT:
-                                # go right
-                                pass
+                    elif event.key in (pygame.K_w, pygame.K_UP):
+                        # go up
+                        player_dy = -player_speed
+                    elif event.key in (pygame.K_a, pygame.K_LEFT):
+                        # go left
+                        player_dx = -player_speed
+                    elif event.key in (pygame.K_s, pygame.K_DOWN):
+                        # go down
+                        player_dy = player_speed
+                    elif event.key in (pygame.K_d, pygame.K_RIGHT):
+                        # go right
+                        player_dx = player_speed
+                elif event.type == pygame.KEYUP:
+                    # stop moving when key is released
+                    if event.key in (pygame.K_w, pygame.K_s, pygame.K_UP, pygame.K_DOWN):
+                        player_dy = 0
+                    elif event.key in (pygame.K_a, pygame.K_d, pygame.K_LEFT, pygame.K_RIGHT):
+                        player_dx = 0
         except SystemExit:
             pygame.quit()
             break
+
+        # Update player position based on velocity
+        player.rect.x += player_dx
+        player.rect.y += player_dy
 
         # Do logical updates here.
         # ...
@@ -70,8 +79,7 @@ def __main__() -> None:
         players.draw(screen)
 
         pygame.display.flip()  # Refresh on-screen display
-        clock.tick(60)  # wait until next frame (at 60 FPS)
-
+        clock.tick(60)  # wait until the next frame (at 60 FPS)
 
 if __name__ == "__main__":
     __main__()
