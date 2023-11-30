@@ -1,4 +1,4 @@
-from models.entity import Entity
+from models.Entity import Entity
 import pygame
 import os
 
