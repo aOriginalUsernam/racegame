@@ -1,7 +1,7 @@
 import pygame
 import pyautogui
 import os
-from models.player import Player
+from models.Player import Player
 
 
 def __main__() -> None:
@@ -41,6 +41,7 @@ def __main__() -> None:
 
     # player settings
     pygame.mouse.set_visible(0)
+    player_scale = background_x / 2
     player_x = 999
     player_y = 999
 
@@ -53,10 +54,12 @@ def __main__() -> None:
     player_speed = 5
     player_dx, player_dy = 0, 0
 
+    # create obstacles
+    obstacles = pygame.sprite.Group()
+
     while True:
         try:
             # Process player inputs.
-            player_has_rotated = False
             for event in pygame.event.get():
                 match event.type:
                     case pygame.QUIT:
@@ -73,8 +76,7 @@ def __main__() -> None:
                                 # go left
                                 player_dx = -player_speed
                                 if player.degree >= -30:
-                                    player.turn(-10)
-                                    player_has_rotated = True
+                                    player.turn(350)
                             case pygame.K_s | pygame.K_DOWN:
                                 # go down
                                 player_dy = player_speed
@@ -83,7 +85,6 @@ def __main__() -> None:
                                 player_dx = player_speed
                                 if player.degree <= 30:
                                     player.turn(10)
-                                    player_has_rotated = True
                     case pygame.KEYUP:
                         # stop moving when key is released
                         match event.key:
@@ -91,14 +92,13 @@ def __main__() -> None:
                                 player_dy = 0
                             case pygame.K_a | pygame.K_d | pygame.K_LEFT | pygame.K_RIGHT:
                                 player_dx = 0
-                                player.turn(player.degree * -1)
+                                player.to_default()
         except SystemExit:
             pygame.quit()
             break
 
         # Update player position based on velocity
-        player.rect.x += player_dx
-        player.rect.y += player_dy
+        player.move(obstacles, player_dx, player_dy)
 
         # Do logical updates here.
         player.rect.x = max(740, min(player.rect.x, 1137))
