@@ -55,8 +55,18 @@ def __main__() -> None:
     player_speed = 5
     player_dx, player_dy = 0, 0
 
+    # player car sound
+    pygame.mixer.music.load(os.path.join(os.getcwd(), "data\sounds\m3.wav"))
+    pygame.mixer.music.play(-1)
+
     # create obstacles
     obstacles = pygame.sprite.Group()
+
+    # hardbrake sound settings
+    on_hardbrake = False
+    hardbrake = pygame.mixer.Sound(
+        os.path.join(os.getcwd(), "data\sounds\hardbrake.wav")
+    )
 
     while True:
         try:
@@ -81,6 +91,10 @@ def __main__() -> None:
                             case pygame.K_s | pygame.K_DOWN:
                                 # go down
                                 player_dy = player_speed
+                                # pygame.mixer.music.pause()
+                                if not on_hardbrake:
+                                    pygame.mixer.Sound.play(hardbrake, fade_ms=800)
+                                pygame.mixer.music.fadeout(1000)
                             case pygame.K_d | pygame.K_RIGHT:
                                 # go right
                                 player_dx = player_speed
@@ -91,6 +105,12 @@ def __main__() -> None:
                         match event.key:
                             case pygame.K_w | pygame.K_s | pygame.K_UP | pygame.K_DOWN:
                                 player_dy = 0
+                                if (
+                                    event.key == pygame.K_s
+                                    or event.key == pygame.K_DOWN
+                                ):
+                                    pygame.mixer.Sound.stop(hardbrake)
+                                    pygame.mixer.music.play(-1)
                             case pygame.K_a | pygame.K_d | pygame.K_LEFT | pygame.K_RIGHT:
                                 player_dx = 0
                                 player.to_default()
