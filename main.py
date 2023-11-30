@@ -2,6 +2,7 @@ import pygame
 import pyautogui
 import os
 from models.Player import Player
+from models.Obstacle import Obstacle
 
 
 def __main__() -> None:
