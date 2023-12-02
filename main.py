@@ -58,6 +58,9 @@ def __main__() -> None:
     # player car sound
     pygame.mixer.music.load(os.path.join(os.getcwd(), "data\sounds\m3.wav"))
     pygame.mixer.music.play(-1)
+    the_funni = pygame.mixer.Sound(
+        os.path.join(os.getcwd(), "data\\sounds\\the_funni.wav")
+    )
     # hardbrake sound settings
     on_hardbrake = False
     hardbrake = pygame.mixer.Sound(
@@ -72,6 +75,12 @@ def __main__() -> None:
 
     while True:
         try:
+            # check for game over
+            if len(players) == 0:
+                pygame.mixer.music.stop()
+                # game over :(
+                pass
+
             # Process player inputs.
             for event in pygame.event.get():
                 match event.type:
@@ -120,6 +129,8 @@ def __main__() -> None:
                                 player.to_default()
                             case pygame.K_DELETE:
                                 player.explode(animations)
+                            case pygame.K_e:
+                                pygame.mixer.Sound.play(the_funni)
         except SystemExit:
             pygame.quit()
             break

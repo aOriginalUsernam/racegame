@@ -5,7 +5,9 @@ import os
 
 class Player(Entity):
     def __init__(self, x: int, y: int, scale: int = 100) -> None:
-        image: pygame.Surface = pygame.image.load(os.path.join(os.getcwd(), "image\player.png"))
+        image: pygame.Surface = pygame.image.load(
+            os.path.join(os.getcwd(), "image\player.png")
+        )
         self.default_image: pygame.Surface = image.copy()
         self.degree: int = 0
         super().__init__(x, y, image, scale)
