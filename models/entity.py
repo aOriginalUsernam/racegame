@@ -1,4 +1,6 @@
 import pygame
+import os
+from models.Animation import Animation
 
 
 class Entity(pygame.sprite.Sprite):
@@ -51,3 +53,20 @@ moves entity based on dx and dy, and returns all entities it colides with.
                 if dy < 0:  # if Moving up; Hit the bottom side of the entity
                     self.rect.top = entity.rect.bottom
         return to_return
+
+    def explode(self) -> Animation:
+        boomframes: list[pygame.Surface] = []
+        for i in range(0, 26):
+            str_i = str(i)
+            if len(str_i) == 1:
+                str_i = f"0{str_i}"
+            boomframes.append(
+                pygame.image.load(
+                    os.path.join(
+                        os.getcwd(), f"image\\explosion\\frame_{str_i}_delay-0.1s.png"
+                    )
+                )
+            )
+        nuke = Animation(boomframes)
+        nuke.play(100)
+        return nuke

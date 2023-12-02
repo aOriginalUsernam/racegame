@@ -58,15 +58,17 @@ def __main__() -> None:
     # player car sound
     pygame.mixer.music.load(os.path.join(os.getcwd(), "data\sounds\m3.wav"))
     pygame.mixer.music.play(-1)
-
-    # create obstacles
-    obstacles = pygame.sprite.Group()
-
     # hardbrake sound settings
     on_hardbrake = False
     hardbrake = pygame.mixer.Sound(
         os.path.join(os.getcwd(), "data\sounds\hardbrake.wav")
     )
+
+    # create obstacles
+    obstacles = pygame.sprite.Group()
+
+    # create animations
+    animations = pygame.sprite.Group()
 
     while True:
         try:
@@ -94,6 +96,7 @@ def __main__() -> None:
                                 # pygame.mixer.music.pause()
                                 if not on_hardbrake:
                                     pygame.mixer.Sound.play(hardbrake, fade_ms=800)
+                                    on_hardbrake = True
                                 pygame.mixer.music.fadeout(1000)
                             case pygame.K_d | pygame.K_RIGHT:
                                 # go right
@@ -110,17 +113,19 @@ def __main__() -> None:
                                     or event.key == pygame.K_DOWN
                                 ):
                                     pygame.mixer.Sound.stop(hardbrake)
+                                    on_hardbrake = False
                                     pygame.mixer.music.play(-1)
                             case pygame.K_a | pygame.K_d | pygame.K_LEFT | pygame.K_RIGHT:
                                 player_dx = 0
                                 player.to_default()
+                            case pygame.K_DELETE:
+                                animations.add(player.explode())
         except SystemExit:
             pygame.quit()
             break
 
         # Update player position based on velocity
         player.move(obstacles, player_dx, player_dy)
-
         # Do logical updates here.
         player.rect.x = max(740, min(player.rect.x, 1137))
         player.rect.y = max(10, min(player.rect.y, 1700))
@@ -138,8 +143,13 @@ def __main__() -> None:
         # draw the player(s)
         players.draw(screen)
 
+        # draw animations
+        for animation in animations.sprites():
+            animation.update()
+        animations.draw(screen)
+
         pygame.display.flip()  # Refresh on-screen display
-        clock.tick(60)  # wait until the next frame (at 60 FPS)
+        clock.tick(100)  # wait until the next frame (at 100 FPS)
 
 
 if __name__ == "__main__":
