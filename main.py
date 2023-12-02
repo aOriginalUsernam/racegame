@@ -119,7 +119,7 @@ def __main__() -> None:
                                 player_dx = 0
                                 player.to_default()
                             case pygame.K_DELETE:
-                                animations.add(player.explode())
+                                player.explode(animations)
         except SystemExit:
             pygame.quit()
             break
@@ -149,7 +149,7 @@ def __main__() -> None:
         animations.draw(screen)
 
         pygame.display.flip()  # Refresh on-screen display
-        clock.tick(100)  # wait until the next frame (at 100 FPS)
+        clock.tick(60)  # wait until the next frame (at 100 FPS)
 
 
 if __name__ == "__main__":
