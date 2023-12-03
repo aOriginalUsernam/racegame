@@ -72,13 +72,18 @@ def __main__() -> None:
 
     # create animations
     animations = pygame.sprite.Group()
-
+    jover = 200
     while True:
         try:
             # check for game over
             if len(players) == 0:
                 pygame.mixer.music.stop()
                 # game over :(
+                if len(animations) == 0:
+                    # wait until sound is jover
+                    if jover == 0:
+                        raise SystemExit
+                    jover -= 1
                 pass
 
             # Process player inputs.
