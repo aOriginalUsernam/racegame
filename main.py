@@ -3,7 +3,7 @@ import pyautogui
 import os
 from models.button import button
 import random
-from models.Player import Player
+from models.player import Player
 from models.Obstacle import Obstacle
 
 
@@ -56,7 +56,9 @@ def main():
         # create player
         player = Player(player_x, player_y)
         players.add(player)
-
+        
+        
+    player_dx, player_dy = 0, 0
     player_speed = 5
 
     # player sounds
@@ -81,6 +83,7 @@ def main():
     game_over_count_down = 150
     score = 0  # Initialize the score
     font = pygame.font.Font(None, 36)  # Create a font object
+    
     diff = 5
     game_over = False
     while True:
@@ -212,6 +215,14 @@ def main():
 
             # ob1.move(players, 0, -5 + diff, animations)
             if len(players) != 0:
+                player.move(obstacles, player_dx, player_dy)
+                # border
+                player.rect.x = max(720, min(player.rect.x, 1100))
+                player.rect.y = max(10, min(player.rect.y, 1700))
+                player.rect.y = min(1025, max(player.rect.y, 10))
+
+                ob1.move(players, 0, 17, animations)
+
                 if ob1.rect.bottom >= full_screen_size[1]:
                     # Reset obstacles only if the player is alive
                     obstacles.empty()
