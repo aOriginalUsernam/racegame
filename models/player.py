@@ -12,6 +12,9 @@ class Player(Entity):
         self.degree: int = 0
         super().__init__(x, y, image, scale)
         self.default_image: pygame.Surface = self.image.copy()
+        self.dx = 0
+        self.dy = 0
+        self.on_hardbrake = False
 
     """shifts the player image in 360 degree's"""
 
