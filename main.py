@@ -145,14 +145,17 @@ def __main__() -> None:
 
         # Update player position based on velocity
         player.move(obstacles, player_dx, player_dy)
-        ob1.move(obstacles, 0, -293)
+        ob1.move(obstacles, 0, -285)
 
         # Check if the obstacle is out of the border, and spawn a new one
+        # ...
+
         # Check if the obstacle is out of the border, and spawn a new one
-        if ob1.rect.right < 0 or ob1.rect.left > full_screen_size[0]:
+        if ob1.rect.bottom >= full_screen_size[1]:
             obstacles.empty()
-            obs_x = random.randrange(723, 1101)
-            ob1 = Obstacle(obs_x, 300)
+            obs_x = random.randrange(795, 1138)
+            obs_y = random.randrange(-100, 0)
+            ob1 = Obstacle(obs_x, obs_y)
             obstacles.add(ob1)
 
         # Do logical updates here.
