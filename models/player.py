@@ -4,7 +4,7 @@ import os
 
 
 class Player(Entity):
-    def __init__(self, x: int, y: int, scale: int = 100) -> None:
+    def __init__(self, x: int, y: int, scale: int = 50) -> None:
         image: pygame.Surface = pygame.image.load(
             os.path.join(os.getcwd(), "image\player.png")
         )

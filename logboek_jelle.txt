@@ -1,0 +1,16 @@
+di: 6,5 hours
+4 hours: wut is pygame
+2,5 hours: git opzetten
+wo: 6,5 hours
+2,5 hours: auto laten draaien 
+2 hours: collision
+2 hours: entity + player model
+do: 6,5 hours
+4 hours: added animation
+2,5 hours: added sounds
+za: 3 hours
+3 hours: made player kill switch (explosion on player + game end)
+ma: 6,5 hours
+3 hours: made startingscreen
+3 hours: made second player
+0,5 hour: made difficulty
