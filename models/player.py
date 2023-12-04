@@ -15,6 +15,20 @@ class Player(Entity):
 
     """shifts the player image in 360 degree's"""
 
+    def move(
+        self,
+        entities: pygame.sprite.Group,
+        dx: int,
+        dy: int,
+        animations: pygame.sprite.Group,
+    ) -> None:
+        collisions: tuple[Entity] = super().move(entities, dx, dy)
+        if len(collisions) != 0:
+            for collision in collisions:
+                if collision != None:
+                    self.explode(animations)
+                    break
+
     def turn(self, degree: int) -> None:
         if degree % 360 == 0 or degree == 0:
             return

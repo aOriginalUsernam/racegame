@@ -75,7 +75,7 @@ def __main__() -> None:
 
     # create animations
     animations = pygame.sprite.Group()
-    jover = 200
+    game_over_count_down = 150
     while True:
         try:
             # check for game over
@@ -84,9 +84,9 @@ def __main__() -> None:
                 # game over :(
                 if len(animations) == 0:
                     # wait until kaBOOM sound is jover
-                    if jover == 0:
+                    if game_over_count_down == 0:
                         raise SystemExit
-                    jover -= 1
+                    game_over_count_down -= 1
 
             # Process player inputs.
             for event in pygame.event.get():
@@ -143,7 +143,7 @@ def __main__() -> None:
             break
 
         # Update player position based on velocity
-        player.move(obstacles, player_dx, player_dy)
+        player.move(obstacles, player_dx, player_dy, animations)
         ob1.move(obstacles, 0, -285)
 
         # Check if the obstacle is out of the border, and spawn a new one
@@ -181,7 +181,7 @@ def __main__() -> None:
         animations.draw(screen)
 
         pygame.display.flip()  # Refresh on-screen display
-        clock.tick(60)  # wait until the next frame (at 100 FPS)
+        clock.tick(60)  # wait until the next frame (at 60 FPS)
 
 
 if __name__ == "__main__":

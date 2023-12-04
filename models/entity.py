@@ -32,7 +32,7 @@ moves entity based on dx and dy, and returns all entities it colides with.
                 to_return.append(self.__move_single_axis__(entities.sprites(), dx, 0))
             if dy != 0:
                 to_return.append(self.__move_single_axis__(entities.sprites(), 0, dy))
-        return to_return
+        return tuple(to_return)
 
     def __move_single_axis__(
         self, entities: list, dx: int = 0, dy: int = 0
