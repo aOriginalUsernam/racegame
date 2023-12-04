@@ -1,0 +1,49 @@
+28/11/23 di: 
+wat is Pygame? en installeren
+tutorials opzoeken hoe het werkt. 
+Ook github aangemaakt om samen te werken.	
+
+3 uur
+_____________
+
+29/11/23 wo:
+Ideeen opzoeken van andere pygames en een begin maken aan code 
+
+3 uur
+______________
+
+30/11/23 do: 
+
+Commands leren met git (push, pull, commit, etc.) (communicatie)
+png's/jpg's opzoeken
+Informatie en videos opzoeken
+
+2 uur
+______________
+
+1/12/23 vr:
+Background voor game toevoegen (road en grass). Ook player center (coordinated) geven op scherm (laptop resolutie). |	
+
+5.5 uur
+______________
+
+2/12/23 za:
+veel errors op het begin en info opgezocht.
+>> collision was toegevoegd en verbeterd. en computer auto. + png’s 	6 uur (met rust ertussen)
+
+3/12/23 zo:
+
+Scroll background en automatische center van auto toegevoegd weer delete ivm veel errors bij pull en mergen van onze codes.
+
+6.5 uur
+______________
+
+4/12/23 ma:
+
+Laatste elementen erin + computer random tick gegeven voor spawn.
+finishing touch.
+
+5 uur
+______________
+
+30.5 uur
