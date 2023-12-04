@@ -80,11 +80,10 @@ def __main__() -> None:
                 pygame.mixer.music.stop()
                 # game over :(
                 if len(animations) == 0:
-                    # wait until sound is jover
+                    # wait until kaBOOM sound is jover
                     if jover == 0:
                         raise SystemExit
                     jover -= 1
-                pass
 
             # Process player inputs.
             for event in pygame.event.get():
