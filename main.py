@@ -9,6 +9,7 @@ from models.Obstacle import Obstacle
 def main():
     pygame.init()
 
+    # make full screen
     full_screen_size = pyautogui.size()
     screen = pygame.display.set_mode(full_screen_size)
 
@@ -19,29 +20,32 @@ def main():
     fullscreen_background = pygame.transform.smoothscale(
         fullscreen_background, full_screen_size
     )
-
     original_background = pygame.image.load(
         os.path.join(os.getcwd(), "image/road_0.png")
     )
     background_width, background_height = original_background.get_size()
 
+    # calc position of background
     background_x = (full_screen_size[0] - background_width) // 2
     background_y = (full_screen_size[1] - background_height) // 2
     background_image = pygame.transform.smoothscale(
         original_background, (background_width, background_height)
     )
 
+    # make header
     pygame.display.set_caption("Need for Speed")
     icon = pygame.image.load(os.path.join(os.getcwd(), "image/siep.jpg")).convert()
     pygame.display.set_icon(icon)
 
     clock = pygame.time.Clock()
 
+    # player settings
     pygame.mouse.set_visible(0)
     player_scale = background_x / 2
     player_x = 999
     player_y = 999
 
+    # create player
     players = pygame.sprite.Group()
     player = Player(player_x, player_y)
     players.add(player)
@@ -49,6 +53,7 @@ def main():
     player_speed = 5
     player_dx, player_dy = 0, 0
 
+    # player sounds
     pygame.mixer.music.load(os.path.join(os.getcwd(), "data/sounds/m3.wav"))
     pygame.mixer.music.play(-1)
     the_funni = pygame.mixer.Sound(
@@ -60,6 +65,7 @@ def main():
         os.path.join(os.getcwd(), "data/sounds/hardbrake.wav")
     )
 
+    # create obstacles
     ob_image = pygame.image.load(os.path.join(os.getcwd(), "image/enemy car.jpg"))
     ob_image = pygame.transform.rotate(ob_image, 180)
     obstacles = pygame.sprite.Group()
@@ -128,6 +134,11 @@ def main():
             # Update player position based on velocity only if the player is alive
             if len(players) != 0:
                 player.move(obstacles, player_dx, player_dy)
+                # border
+                player.rect.x = max(720, min(player.rect.x, 1100))
+                player.rect.y = max(10, min(player.rect.y, 1700))
+                player.rect.y = min(1025, max(player.rect.y, 10))
+
                 ob1.move(players, 0, 17, animations)
 
                 if ob1.rect.bottom >= full_screen_size[1]:
