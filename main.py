@@ -56,8 +56,7 @@ def main():
         # create player
         player = Player(player_x, player_y)
         players.add(player)
-        
-        
+
     player_dx, player_dy = 0, 0
     player_speed = 5
 
@@ -83,12 +82,12 @@ def main():
     game_over_count_down = 150
     score = 0  # Initialize the score
     font = pygame.font.Font(None, 36)  # Create a font object
-    
+
     diff = 5
     game_over = False
     while True:
         # dificulty
-        if score > diff * diff:
+        if score > diff * diff * 2:
             diff += 1
         try:
             if len(players) == 0:
@@ -213,7 +212,6 @@ def main():
                 player.rect.y = max(10, min(player.rect.y, 1700))
                 player.rect.y = min(1025, max(player.rect.y, 10))
 
-            # ob1.move(players, 0, -5 + diff, animations)
             if len(players) != 0:
                 player.move(obstacles, player_dx, player_dy)
                 # border
@@ -221,7 +219,7 @@ def main():
                 player.rect.y = max(10, min(player.rect.y, 1700))
                 player.rect.y = min(1025, max(player.rect.y, 10))
 
-                ob1.move(players, 0, 17, animations)
+                ob1.move(players, 0, 1 + diff, animations)
 
                 if ob1.rect.bottom >= full_screen_size[1]:
                     # Reset obstacles only if the player is alive
