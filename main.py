@@ -1,6 +1,7 @@
 import pygame
 import pyautogui
 import os
+import random
 from models.Player import Player
 from models.Obstacle import Obstacle
 
@@ -69,6 +70,8 @@ def __main__() -> None:
 
     # create obstacles
     obstacles = pygame.sprite.Group()
+    ob1 = Obstacle(850, 300)
+    obstacles.add(ob1)
 
     # create animations
     animations = pygame.sprite.Group()
@@ -141,6 +144,19 @@ def __main__() -> None:
 
         # Update player position based on velocity
         player.move(obstacles, player_dx, player_dy)
+        ob1.move(obstacles, 0, -285)
+
+        # Check if the obstacle is out of the border, and spawn a new one
+        # ...
+
+        # Check if the obstacle is out of the border, and spawn a new one
+        if ob1.rect.bottom >= full_screen_size[1]:
+            obstacles.empty()
+            obs_x = random.randrange(795, 1138)
+            obs_y = random.randrange(-100, 0)
+            ob1 = Obstacle(obs_x, obs_y)
+            obstacles.add(ob1)
+
         # Do logical updates here.
         player.rect.x = max(740, min(player.rect.x, 1137))
         player.rect.y = max(10, min(player.rect.y, 1700))
@@ -157,6 +173,7 @@ def __main__() -> None:
 
         # draw the player(s)
         players.draw(screen)
+        obstacles.draw(screen)
 
         # draw animations
         for animation in animations.sprites():
