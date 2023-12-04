@@ -5,6 +5,7 @@ import random
 from models.Player import Player
 from models.Obstacle import Obstacle
 
+
 def main():
     pygame.init()
 
@@ -24,7 +25,6 @@ def main():
     )
     background_width, background_height = original_background.get_size()
 
-
     background_x = (full_screen_size[0] - background_width) // 2
     background_y = (full_screen_size[1] - background_height) // 2
     background_image = pygame.transform.smoothscale(
@@ -32,24 +32,19 @@ def main():
     )
 
     pygame.display.set_caption("Need for Speed")
-    icon = pygame.image.load(
-        os.path.join(os.getcwd(), "image/siep.jpg")
-    ).convert()
+    icon = pygame.image.load(os.path.join(os.getcwd(), "image/siep.jpg")).convert()
     pygame.display.set_icon(icon)
 
     clock = pygame.time.Clock()
-
 
     pygame.mouse.set_visible(0)
     player_scale = background_x / 2
     player_x = 999
     player_y = 999
 
-
     players = pygame.sprite.Group()
     player = Player(player_x, player_y)
     players.add(player)
-
 
     player_speed = 5
     player_dx, player_dy = 0, 0
@@ -65,14 +60,11 @@ def main():
         os.path.join(os.getcwd(), "data/sounds/hardbrake.wav")
     )
 
-    ob_image = pygame.image.load(
-        os.path.join(os.getcwd(), "image/enemy car.jpg")
-    )
+    ob_image = pygame.image.load(os.path.join(os.getcwd(), "image/enemy car.jpg"))
     ob_image = pygame.transform.rotate(ob_image, 180)
     obstacles = pygame.sprite.Group()
     ob1 = Obstacle(850, 300, ob_image)
     obstacles.add(ob1)
-
 
     animations = pygame.sprite.Group()
     game_over_count_down = 150
@@ -84,6 +76,12 @@ def main():
 
     while True:
         try:
+            if len(players) == 0:
+                pygame.mixer.music.stop()
+                if game_over_count_down == 0:
+                    raise SystemExit
+                game_over_count_down -= 1
+
             for event in pygame.event.get():
                 match event.type:
                     case pygame.QUIT:
@@ -124,37 +122,30 @@ def main():
                                 player.to_default()
                             case pygame.K_DELETE:
                                 player.explode(animations)
-                                player_alive = False  # Set the player_alive flag to False
                             case pygame.K_e:
                                 pygame.mixer.Sound.play(the_funni)
 
-
             # Update player position based on velocity only if the player is alive
-            if player_alive:
+            if len(players) != 0:
                 player.move(obstacles, player_dx, player_dy)
                 ob1.move(players, 0, 17, animations)
 
-
-            if ob1.rect.bottom >= full_screen_size[1]:
-                # Reset obstacles only if the player is alive
-                if len(players) > 0:
+                if ob1.rect.bottom >= full_screen_size[1]:
+                    # Reset obstacles only if the player is alive
                     obstacles.empty()
                     obs_x = random.randrange(795, 1138)
                     obs_y = random.randrange(-100, 0)
                     ob1 = Obstacle(obs_x, obs_y, ob_image)
                     obstacles.add(ob1)
 
-            if len(players) > 0:
                 score += 1
 
             screen.fill("purple")
             screen.blit(fullscreen_background, (0, 0))
             screen.blit(background_image, (background_x, background_y))
 
-
             players.draw(screen)
             obstacles.draw(screen)
-
 
             for animation in animations.sprites():
                 animation.update()
@@ -170,6 +161,7 @@ def main():
         except SystemExit:
             pygame.quit()
             break
+
 
 if __name__ == "__main__":
     main()
